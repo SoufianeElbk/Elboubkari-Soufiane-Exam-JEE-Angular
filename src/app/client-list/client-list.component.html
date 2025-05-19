@@ -1,0 +1,54 @@
+<div class="container mt-4">
+  <h2>Liste des Clients</h2>
+
+  <div class="row mb-3">
+    <div class="col">
+      <button class="btn btn-primary" routerLink="/clients/new">
+        Nouveau Client
+      </button>
+    </div>
+  </div>
+
+  <div *ngIf="loading" class="text-center">
+    <div class="spinner-border" role="status">
+      <span class="visually-hidden">Chargement...</span>
+    </div>
+  </div>
+
+  <div *ngIf="error" class="alert alert-danger">
+    {{ error }}
+  </div>
+
+  <table class="table table-striped" *ngIf="!loading && clients.length > 0">
+    <thead>
+    <tr>
+      <th>ID</th>
+      <th>Nom</th>
+      <th>Email</th>
+      <th>Actions</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr *ngFor="let client of clients">
+      <td>{{ client.id }}</td>
+      <td>{{ client.nom }}</td>
+      <td>{{ client.email }}</td>
+      <td>
+        <button class="btn btn-sm btn-info me-2" [routerLink]="['/clients', client.id]">
+          Détails
+        </button>
+        <button class="btn btn-sm btn-warning me-2" [routerLink]="['/clients', client.id, 'edit']">
+          Modifier
+        </button>
+        <button class="btn btn-sm btn-danger" (click)="deleteClient(client.id)">
+          Supprimer
+        </button>
+      </td>
+    </tr>
+    </tbody>
+  </table>
+
+  <div *ngIf="!loading && clients.length === 0" class="alert alert-info">
+    Aucun client trouvé.
+  </div>
+</div>
